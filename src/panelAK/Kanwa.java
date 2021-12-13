@@ -35,6 +35,9 @@ public class Kanwa extends JPanel implements MouseInputListener, KeyListener{
     @Override
     public void mouseClicked(MouseEvent e) {
         b = getMousePosition();
+        int i =0;
+        System.out.println("klik "+i);
+        i++;
         grabFocus();
     }
 
