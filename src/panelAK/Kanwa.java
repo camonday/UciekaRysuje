@@ -14,6 +14,8 @@ public class Kanwa extends JPanel implements MouseInputListener, KeyListener{
 
     Point b = null;
     Ksztalt k = null;
+    boolean hasEscaped = false;
+    boolean draw = true;
 
     public Kanwa() {
         setFocusable(true);
@@ -32,34 +34,35 @@ public class Kanwa extends JPanel implements MouseInputListener, KeyListener{
         repaint();
     }
 
-    int i =0;
     @Override
     public void mouseClicked(MouseEvent e) {
-        b = getMousePosition();
 
-        System.out.println("klik "+i);
-        i++;
-        grabFocus();
+
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        b = getMousePosition();
+        hasEscaped = false;
+        draw = true;
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        grabFocus();
+        if (hasEscaped) draw=false;
+        //jesli uzytkownik uciekł kursorem z pola przed podniesieniem myszy
+        // to nie rysuje (WCAG 2.1 wytyczna 2.5.2)
 
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-
+        hasEscaped = true;
     }
 
     @Override
@@ -107,7 +110,8 @@ public class Kanwa extends JPanel implements MouseInputListener, KeyListener{
                 k = new Kwadrat((int) b.getX(), (int) b.getY());
 
         }
-        repaint();
+        if(draw)
+            repaint();
     }
 }
 
